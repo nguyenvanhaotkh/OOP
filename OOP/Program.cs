@@ -16,6 +16,7 @@ namespace OOP
             Program p = new Program();
             p.FunctionSelection(db);
         }
+
         private void FunctionSelection(Database db)
         {
             Console.WriteLine("1-Insert");
@@ -42,6 +43,9 @@ namespace OOP
                 case 5:
                     DeleteAll(db);
                     break;
+                case 6:
+                    Environment.Exit(0);
+                    break;
                 default:
                     Console.WriteLine("value does not match");
                     FunctionSelection(db);
@@ -49,6 +53,7 @@ namespace OOP
 
             }
         }
+
         private void Insert(Database db)
         {
             Console.WriteLine("Enter Entity:");
@@ -62,7 +67,7 @@ namespace OOP
                     Console.WriteLine("Enter Category Id:");
                     int pcategoryid = Convert.ToInt32(Console.ReadLine());
                     Product np = new Product(pid, ptxtname, pcategoryid);
-                    db.insertTable("product", np);
+                    db.InsertTable("product", np);
                     FunctionSelection(db);
                     break;
                 case "category":
@@ -70,7 +75,7 @@ namespace OOP
                     Console.WriteLine("Enter Name:");
                     string ctxtname = Console.ReadLine();
                     Category nc = new Category(cid, ctxtname);
-                    db.insertTable("product", nc);
+                    db.InsertTable("product", nc);
                     FunctionSelection(db);
                     break;
                 case "accessotion":
@@ -78,7 +83,7 @@ namespace OOP
                     Console.WriteLine("Enter Name:");
                     string atxtname = Console.ReadLine();
                     Category na = new Category(aid, atxtname);
-                    db.insertTable("product", na);
+                    db.InsertTable("product", na);
                     FunctionSelection(db);
                     break;
                 default:
@@ -87,6 +92,7 @@ namespace OOP
                     break;
             }
         }
+
         private void Select(Database db)
         {
             Console.WriteLine("Enter Entity:");
@@ -100,7 +106,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     FunctionSelection(db);
                     break;
                 case "category":
@@ -110,7 +116,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     FunctionSelection(db);
                     break;
                 case "accessotion":
@@ -120,7 +126,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     FunctionSelection(db);
                     break;
                 default:
@@ -129,6 +135,7 @@ namespace OOP
                     break;
             }
         }
+
         private void Update(Database db)
         {
             Console.WriteLine("Enter Entity:");
@@ -142,7 +149,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     Console.WriteLine("Select Product Id:");
                     int pid = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Enter New Name:");
@@ -150,7 +157,7 @@ namespace OOP
                     Console.WriteLine("Enter New Category Id:");
                     int pcategoryid = Convert.ToInt32(Console.ReadLine());
                     Product np = new Product(pid, ptxtname, pcategoryid);
-                    db.updateTable("product", np);
+                    db.UpdateTable("product", np);
                     FunctionSelection(db);
                     break;
                 case "category":
@@ -160,13 +167,13 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     Console.WriteLine("Select Product Id:");
                     int cid = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Enter New Name:");
                     string ctxtname = Console.ReadLine();
                     Category nc = new Category(cid, ctxtname);
-                    db.updateTable("product", nc);
+                    db.UpdateTable("product", nc);
                     FunctionSelection(db);
                     break;
                 case "accessotion":
@@ -176,13 +183,13 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     Console.WriteLine("Select Product Id:");
                     int aid = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Enter New Name:");
                     string atxtname = Console.ReadLine();
                     Category na = new Category(aid, atxtname);
-                    db.insertTable("product", na);
+                    db.InsertTable("product", na);
                     FunctionSelection(db);
                     break;
                 default:
@@ -191,6 +198,7 @@ namespace OOP
                     break;
             }
         }
+
         private void Delete(Database db)
         {
             Console.WriteLine("Enter Entity:");
@@ -204,7 +212,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     Console.WriteLine("Select Product Id:");
                     int pid = Convert.ToInt32(Console.ReadLine());
                     db.Delete("product", pid);
@@ -217,7 +225,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     Console.WriteLine("Select Product Id:");
                     int cid = Convert.ToInt32(Console.ReadLine());
                     db.Delete("product", cid);
@@ -230,7 +238,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.selectTable("product");
+                    db.SelectTable("product");
                     Console.WriteLine("Select Product Id:");
                     int aid = Convert.ToInt32(Console.ReadLine());
                     db.Delete("product", aid);
@@ -242,6 +250,7 @@ namespace OOP
                     break;
             }
         }
+
         private void DeleteAll(Database db)
         {
             Console.WriteLine("Enter Entity:");
@@ -287,5 +296,6 @@ namespace OOP
                     break;
             }
         }
+
     }
 }

@@ -13,6 +13,7 @@ namespace OOP.dao
         public List<Category> categorieTable = new List<Category>();
         public List<Accessotion> accessotionTable = new List<Accessotion>();
         private static Database _database;
+
         public static Database GetInstance()
         {
             if (_database == null)
@@ -21,7 +22,8 @@ namespace OOP.dao
             }
             return _database;
         }
-        public void insertTable(string name, object obj)
+
+        public void InsertTable(string name, object obj)
         {
             switch (name)
             {
@@ -36,106 +38,110 @@ namespace OOP.dao
                     break;
             }
         }
-        public void selectTable(string name)
+
+        public void SelectTable(string name)
         {
             switch (name)
             {
                 case "product":
-                    foreach(Product p in productTable)
+                    foreach(Product product in productTable)
                     {
-                        Console.WriteLine(p.TxtData());
+                        Console.WriteLine(product.TxtData());
                     }
                     break;
                 case "category":
-                    foreach (Category c in categorieTable)
+                    foreach (Category category in categorieTable)
                     {
-                        Console.WriteLine(c.TxtData());
+                        Console.WriteLine(category.TxtData());
                     }
                     break;
                 case "accessotion":
-                    foreach (Accessotion a in accessotionTable)
+                    foreach (Accessotion accessotion in accessotionTable)
                     {
-                        Console.WriteLine(a.TxtData());
+                        Console.WriteLine(accessotion.TxtData());
                     }
                     break;
             }
         }
-        public void updateTable(string name,object obj)
+
+        public void UpdateTable(string name,object obj)
         {
             switch (name)
             {
                 case "product":
-                    Product newdatap = (Product)obj;
-                    foreach(Product p in productTable)
+                    Product newproductdata = (Product)obj;
+                    foreach(Product product in productTable)
                     {
-                        if (p.GetId() == newdatap.GetId())
+                        if (product.GetId() == newproductdata.GetId())
                         {
-                            p.SetName(newdatap.name);
-                            p.SetCategoryId(newdatap.categoryId);
+                            product.SetName(newproductdata.name);
+                            product.SetCategoryId(newproductdata.categoryId);
                             break;
                         }
                     }
                     break;
                 case "category":
-                    Category newdatac = (Category)obj;
-                    foreach (Category c in categorieTable)
+                    Category newcategorydata = (Category)obj;
+                    foreach (Category category in categorieTable)
                     {
-                        if (c.GetId() == newdatac.GetId())
+                        if (category.GetId() == newcategorydata.GetId())
                         {
-                            c.SetName(newdatac.name);
+                            category.SetName(newcategorydata.name);
                             break;
                         }
                     }
                     break;
                 case "accessotion":
-                    Accessotion newdataa = (Accessotion)obj;
-                    foreach (Accessotion a in accessotionTable)
+                    Accessotion newaccessotiondata = (Accessotion)obj;
+                    foreach (Accessotion accessotion in accessotionTable)
                     {
-                        if (a.GetId() == newdataa.GetId())
+                        if (accessotion.GetId() == newaccessotiondata.GetId())
                         {
-                            a.SetName(newdataa.name);
+                            accessotion.SetName(newaccessotiondata.name);
                             break;
                         }
                     }
                     break;
             }
         }
+
         public void Delete(string name, int obj)
         {
             switch (name)
             {
                 case "product":
-                    foreach (Product p in productTable)
+                    foreach (Product product in productTable)
                     {
-                        if (p.GetId() == obj)
+                        if (product.GetId() == obj)
                         {
-                            productTable.Remove(p);
+                            productTable.Remove(product);
                             break;
                         }
                     }
                     break;
                 case "category":
-                    foreach (Category c in categorieTable)
+                    foreach (Category category in categorieTable)
                     {
-                        if (c.GetId() == obj)
+                        if (category.GetId() == obj)
                         {
-                            categorieTable.Remove(c);
+                            categorieTable.Remove(category);
                             break;
                         }
                     }
                     break;
                 case "accessotion":
-                    foreach (Accessotion a in accessotionTable)
+                    foreach (Accessotion accessotion in accessotionTable)
                     {
-                        if (a.GetId() == obj)
+                        if (accessotion.GetId() == obj)
                         {
-                            accessotionTable.Remove(a);
+                            accessotionTable.Remove(accessotion);
                             break;
                         }
                     }
                     break;
             }
         }
+
         public void DeleteAll(string name)
         {
             switch (name)
@@ -151,5 +157,6 @@ namespace OOP.dao
                     break;
             }
         }
+
     }
 }

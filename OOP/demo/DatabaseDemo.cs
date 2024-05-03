@@ -9,6 +9,25 @@ namespace OOP.demo
 {
     class DatabaseDemo
     {
+        public void InsertTable(string name, object obj)
+        {
+        }
+
+        public void SelectTable(string name)
+        {
+        }
+
+        public void UpdateTable(string name, object obj)
+        {
+        }
+
+        public void Delete(string name, int obj)
+        {
+        }
+
+        public void DeleteAll(string name)
+        {
+        }
 
     }
 }

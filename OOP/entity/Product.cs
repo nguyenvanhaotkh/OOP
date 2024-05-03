@@ -22,26 +22,32 @@ namespace OOP.entity
         {
             return id;
         }
+
         public string GetName()
         {
             return name;
         }
+
         public int GetCategoryId()
         {
             return categoryId;
         }
+
         public void SetId(int id)
         {
             this.id = id;
         }
+
         public void SetName(string name)
         {
             this.name = name;
         }
+
         public void SetCategoryId(int categoryId)
         {
             this.categoryId = categoryId;
         }
+
         public string TxtData()
         {
             return "Id:" + this.id + " - Name:" + this.name + " - Category Id:" + this.categoryId;
