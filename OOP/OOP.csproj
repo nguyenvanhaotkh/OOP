@@ -43,10 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dao\AccessoryDAO.cs" />
+    <Compile Include="dao\CategoryDAO.cs" />
     <Compile Include="dao\Database.cs" />
+    <Compile Include="dao\ProductDAO .cs" />
+    <Compile Include="demo\AccessoryDAODemo.cs" />
+    <Compile Include="demo\CategoryDaoDemo.cs" />
     <Compile Include="demo\DatabaseDemo.cs" />
+    <Compile Include="demo\ProductDaoDemo.cs" />
     <Compile Include="demo\ProductDemo.cs" />
     <Compile Include="entity\Accessotion.cs" />
+    <Compile Include="entity\BaseRow.cs" />
     <Compile Include="entity\Category.cs" />
     <Compile Include="entity\Product.cs" />
     <Compile Include="Program.cs" />

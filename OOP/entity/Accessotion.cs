@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OOP.entity
 {
-    class Accessotion
+    class Accessotion : BaseRow
     {
-        public int id;
-        public string name;
         public Accessotion() { }
         public Accessotion(int id, string name)
         {
@@ -17,26 +15,5 @@ namespace OOP.entity
             this.name = name;
         }
 
-        public int GetId()
-        {
-            return id;
-        }
-
-        public string GetName()
-        {
-            return name;
-        }
-        public void SetId(int id)
-        {
-            this.id = id;
-        }
-        public void SetName(string name)
-        {
-            this.name = name;
-        }
-        public string TxtData()
-        {
-            return "Id:" + this.id + " - Name:" + this.name;
-        }
     }
 }

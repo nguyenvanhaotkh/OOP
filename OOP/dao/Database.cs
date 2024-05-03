@@ -12,8 +12,11 @@ namespace OOP.dao
         public List<Product> productTable = new List<Product>();
         public List<Category> categorieTable = new List<Category>();
         public List<Accessotion> accessotionTable = new List<Accessotion>();
-        private static Database _database;
+        private string product = "product";
+        private string category = "category";
+        private string accessotion = "accessotion";
 
+        private static Database _database;
         public static Database GetInstance()
         {
             if (_database == null)
@@ -25,138 +28,84 @@ namespace OOP.dao
 
         public void InsertTable(string name, object obj)
         {
-            switch (name)
-            {
-                case "product":
-                    productTable.Add((Product)obj);
-                    break;
-                case "category":
-                    categorieTable.Add((Category)obj);
-                    break;
-                case "accessotion":
-                    accessotionTable.Add((Accessotion)obj);
-                    break;
+            if (name == product) {
+                ProductDAO.GetInstance().Insert((Product)obj);
+                return;
             }
+            if (name == category) {
+                CategoryDAO.GetInstance().Insert((Category)obj);
+                return;
+            }
+            if (name == accessotion) {
+                AccessoryDAO.GetInstance().Insert((Accessotion)obj);
+                return;
+            }
+            Console.WriteLine("Invalid value");
         }
 
-        public void SelectTable(string name)
+        public List<object> SelectTable(string name)
         {
-            switch (name)
-            {
-                case "product":
-                    foreach(Product product in productTable)
-                    {
-                        Console.WriteLine(product.TxtData());
-                    }
-                    break;
-                case "category":
-                    foreach (Category category in categorieTable)
-                    {
-                        Console.WriteLine(category.TxtData());
-                    }
-                    break;
-                case "accessotion":
-                    foreach (Accessotion accessotion in accessotionTable)
-                    {
-                        Console.WriteLine(accessotion.TxtData());
-                    }
-                    break;
+            if (name == product) {
+                return ProductDAO.GetInstance().FindAll();
             }
+            if (name == category) {
+                return CategoryDAO.GetInstance().FindAll();
+            }
+            return AccessoryDAO.GetInstance().FindAll();
         }
 
         public void UpdateTable(string name,object obj)
         {
-            switch (name)
+            if (name == product)
             {
-                case "product":
-                    Product newproductdata = (Product)obj;
-                    foreach(Product product in productTable)
-                    {
-                        if (product.GetId() == newproductdata.GetId())
-                        {
-                            product.SetName(newproductdata.name);
-                            product.SetCategoryId(newproductdata.categoryId);
-                            break;
-                        }
-                    }
-                    break;
-                case "category":
-                    Category newcategorydata = (Category)obj;
-                    foreach (Category category in categorieTable)
-                    {
-                        if (category.GetId() == newcategorydata.GetId())
-                        {
-                            category.SetName(newcategorydata.name);
-                            break;
-                        }
-                    }
-                    break;
-                case "accessotion":
-                    Accessotion newaccessotiondata = (Accessotion)obj;
-                    foreach (Accessotion accessotion in accessotionTable)
-                    {
-                        if (accessotion.GetId() == newaccessotiondata.GetId())
-                        {
-                            accessotion.SetName(newaccessotiondata.name);
-                            break;
-                        }
-                    }
-                    break;
+                ProductDAO.GetInstance().Update((Product)obj);
+                return;
             }
+            if (name == category)
+            {
+                CategoryDAO.GetInstance().Update((Category)obj);
+                return;
+            }
+            if (name == accessotion)
+            {
+                AccessoryDAO.GetInstance().Update((Accessotion)obj);
+                return;
+            }
+            Console.WriteLine("Invalid value");
         }
 
-        public void Delete(string name, int obj)
+        public void Delete(string name, int id)
         {
-            switch (name)
-            {
-                case "product":
-                    foreach (Product product in productTable)
-                    {
-                        if (product.GetId() == obj)
-                        {
-                            productTable.Remove(product);
-                            break;
-                        }
-                    }
-                    break;
-                case "category":
-                    foreach (Category category in categorieTable)
-                    {
-                        if (category.GetId() == obj)
-                        {
-                            categorieTable.Remove(category);
-                            break;
-                        }
-                    }
-                    break;
-                case "accessotion":
-                    foreach (Accessotion accessotion in accessotionTable)
-                    {
-                        if (accessotion.GetId() == obj)
-                        {
-                            accessotionTable.Remove(accessotion);
-                            break;
-                        }
-                    }
-                    break;
+            if (name == product) {
+                ProductDAO.GetInstance().Delete(id);
+                return; 
             }
+            if (name == category)
+            {
+                CategoryDAO.GetInstance().Delete(id);
+                return;
+            }
+            AccessoryDAO.GetInstance().Delete(id);
         }
 
         public void DeleteAll(string name)
         {
-            switch (name)
+            if (name == product)
             {
-                case "product":
-                    productTable.Clear();
-                    break;
-                case "category":
-                    categorieTable.Clear();
-                    break;
-                case "accessotion":
-                    accessotionTable.Clear();
-                    break;
+                productTable.Clear();
+                return;
             }
+            if (name == category)
+            {
+                categorieTable.Clear();
+                return;
+            }
+            accessotionTable.Clear();
         }
 
+        public void UpdateTableById(int id, object obj)
+        {
+
+        }
     }
 }

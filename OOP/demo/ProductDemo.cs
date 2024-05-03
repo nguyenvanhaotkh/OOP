@@ -9,13 +9,13 @@ namespace OOP.demo
 {
     class ProductDemo : Product
     {
-        public void CreateProductTest()
+        public Product CreateProductTest()
         {
-
+            return new Product();
         }
         public void PrintProduct(Product product)
         {
-
+            Console.WriteLine(product.TxtData());
         }
     }
 }

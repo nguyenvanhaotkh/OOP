@@ -10,6 +10,9 @@ namespace OOP
 {
     class Program
     {
+        private string product = "product";
+        private string category = "category";
+        private string accessotion = "accessotion";
         static void Main(string[] args)
         {
             Database db = Database.GetInstance();
@@ -61,29 +64,18 @@ namespace OOP
             switch (txt)
             {
                 case "product":
-                    int pid = db.productTable.Count();
-                    Console.WriteLine("Enter Name:");
-                    string ptxtname = Console.ReadLine();
-                    Console.WriteLine("Enter Category Id:");
-                    int pcategoryid = Convert.ToInt32(Console.ReadLine());
-                    Product np = new Product(pid, ptxtname, pcategoryid);
-                    db.InsertTable("product", np);
+                    Product np = (Product)ObjectFormInput(txt);
+                    db.InsertTable(product, np);
                     FunctionSelection(db);
                     break;
                 case "category":
-                    int cid = db.categorieTable.Count();
-                    Console.WriteLine("Enter Name:");
-                    string ctxtname = Console.ReadLine();
-                    Category nc = new Category(cid, ctxtname);
-                    db.InsertTable("product", nc);
+                    Category nc = (Category)ObjectFormInput(txt);
+                    db.InsertTable(category, nc);
                     FunctionSelection(db);
                     break;
                 case "accessotion":
-                    int aid = db.accessotionTable.Count();
-                    Console.WriteLine("Enter Name:");
-                    string atxtname = Console.ReadLine();
-                    Category na = new Category(aid, atxtname);
-                    db.InsertTable("product", na);
+                    Accessotion na = (Accessotion)ObjectFormInput(txt);
+                    db.InsertTable(accessotion, na);
                     FunctionSelection(db);
                     break;
                 default:
@@ -106,7 +98,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
+                    db.SelectTable(product);
                     FunctionSelection(db);
                     break;
                 case "category":
@@ -116,7 +108,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
+                    db.SelectTable(category);
                     FunctionSelection(db);
                     break;
                 case "accessotion":
@@ -126,7 +118,7 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
+                    db.SelectTable(accessotion);
                     FunctionSelection(db);
                     break;
                 default:
@@ -149,15 +141,16 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
-                    Console.WriteLine("Select Product Id:");
-                    int pid = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Enter New Name:");
-                    string ptxtname = Console.ReadLine();
-                    Console.WriteLine("Enter New Category Id:");
-                    int pcategoryid = Convert.ToInt32(Console.ReadLine());
-                    Product np = new Product(pid, ptxtname, pcategoryid);
-                    db.UpdateTable("product", np);
+                    db.SelectTable(product);
+                    int productId = InputId();
+                    if (!CheckId(txt, productId))
+                    {
+                        FunctionSelection(db);
+                        return;
+                    }
+                    Product newProduct = (Product)ObjectFormInput(txt);
+                    newProduct.SetId(productId);
+                    db.UpdateTable(product, newProduct);
                     FunctionSelection(db);
                     break;
                 case "category":
@@ -167,13 +160,16 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
-                    Console.WriteLine("Select Product Id:");
-                    int cid = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Enter New Name:");
-                    string ctxtname = Console.ReadLine();
-                    Category nc = new Category(cid, ctxtname);
-                    db.UpdateTable("product", nc);
+                    db.SelectTable(category);
+                    int categoryId = InputId();
+                    if (!CheckId(txt, categoryId))
+                    {
+                        FunctionSelection(db);
+                        return;
+                    }
+                    Category newCategory = (Category)ObjectFormInput(txt);
+                    newCategory.SetId(categoryId);
+                    db.UpdateTable(category, newCategory);
                     FunctionSelection(db);
                     break;
                 case "accessotion":
@@ -183,13 +179,16 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
-                    Console.WriteLine("Select Product Id:");
-                    int aid = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Enter New Name:");
-                    string atxtname = Console.ReadLine();
-                    Category na = new Category(aid, atxtname);
-                    db.InsertTable("product", na);
+                    db.SelectTable(accessotion);
+                    int accessotionId = InputId();
+                    if (!CheckId(txt, accessotionId))
+                    {
+                        FunctionSelection(db);
+                        return;
+                    }
+                    Accessotion newAccessotion = (Accessotion)ObjectFormInput(txt);
+                    newAccessotion.SetId(accessotionId);
+                    db.UpdateTable(accessotion, newAccessotion);
                     FunctionSelection(db);
                     break;
                 default:
@@ -212,10 +211,10 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
+                    db.SelectTable(product);
                     Console.WriteLine("Select Product Id:");
                     int pid = Convert.ToInt32(Console.ReadLine());
-                    db.Delete("product", pid);
+                    db.Delete(product, pid);
                     FunctionSelection(db);
                     break;
                 case "category":
@@ -225,10 +224,10 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
+                    db.SelectTable(category);
                     Console.WriteLine("Select Product Id:");
                     int cid = Convert.ToInt32(Console.ReadLine());
-                    db.Delete("product", cid);
+                    db.Delete(category, cid);
                     FunctionSelection(db);
                     break;
                 case "accessotion":
@@ -238,10 +237,10 @@ namespace OOP
                         FunctionSelection(db);
                         break;
                     }
-                    db.SelectTable("product");
+                    db.SelectTable(accessotion);
                     Console.WriteLine("Select Product Id:");
                     int aid = Convert.ToInt32(Console.ReadLine());
-                    db.Delete("product", aid);
+                    db.Delete(accessotion, aid);
                     FunctionSelection(db);
                     break;
                 default:
@@ -265,7 +264,7 @@ namespace OOP
                         break;
                     }
                     Console.WriteLine("Delete...");
-                    db.DeleteAll("product");
+                    db.DeleteAll(product);
                     FunctionSelection(db);
                     break;
                 case "category":
@@ -276,7 +275,7 @@ namespace OOP
                         break;
                     }
                     Console.WriteLine("Delete...");
-                    db.DeleteAll("category");
+                    db.DeleteAll(category);
                     FunctionSelection(db);
                     break;
                 case "accessotion":
@@ -287,7 +286,7 @@ namespace OOP
                         break;
                     }
                     Console.WriteLine("Delete...");
-                    db.DeleteAll("accessotion");
+                    db.DeleteAll(accessotion);
                     FunctionSelection(db);
                     break;
                 default:
@@ -297,5 +296,51 @@ namespace OOP
             }
         }
 
+        private object ObjectFormInput(string name)
+        {
+            if(name == product)
+            {
+                int productId = Database.GetInstance().productTable.Count();
+                Console.WriteLine("Enter New Name:");
+                string productName = Console.ReadLine();
+                Console.WriteLine("Enter New Category Id:");
+                int productCategoryId = Convert.ToInt32(Console.ReadLine());
+                return new Product(productId,productName, productCategoryId);
+            }
+            if(name == category)
+            {
+                int categoryId = Database.GetInstance().productTable.Count();
+                Console.WriteLine("Enter New Name:");
+                string categoryName = Console.ReadLine();
+                return new Category(categoryId, categoryName);
+            }
+            int accessotionId = Database.GetInstance().productTable.Count();
+            Console.WriteLine("Enter New Name:");
+            string accessotionName = Console.ReadLine();
+            return new Accessotion(accessotionId, accessotionName);
+        }
+        private int InputId()
+        {
+            Console.WriteLine("Select Id:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            return id;
+        }
+        private bool CheckId(string name, int id)
+        {
+            if (name == product && Database.GetInstance().productTable.FirstOrDefault(productObject => productObject.GetId() == id) != null)
+            {
+                return true;
+            }
+            if (name == category && Database.GetInstance().categorieTable.FirstOrDefault(categoryObject => categoryObject.GetId() == id) != null)
+            {
+                return true;
+            }
+            if (name == accessotion && Database.GetInstance().accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() != id) == null)
+            {
+                return true;
+            }
+            Console.WriteLine("id does not exist");
+            return false;
+        }
     }
 }
