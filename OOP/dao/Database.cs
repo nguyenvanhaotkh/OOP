@@ -10,17 +10,13 @@ namespace OOP.dao
 {
     class Database
     {
-        public List<BaseRow> productTable = new List<BaseRow>();
-        public List<BaseRow> categorieTable = new List<BaseRow>();
-        public List<BaseRow> accessotionTable = new List<BaseRow>();
+        private List<BaseRow> productTable = new List<BaseRow>();
+        private List<BaseRow> categorieTable = new List<BaseRow>();
+        private List<BaseRow> accessotionTable = new List<BaseRow>();
 
         const string PRODUCT = "product";
         const string CATEGORY = "category";
         const string ACCESSOTION = "accessotion";
-
-        private ProductDaoDemo productDaoDemo = new ProductDaoDemo(new ProductDAO());
-        private CategoryDaoDemo categoryDaoDemo = new CategoryDaoDemo(new CategoryDAO());
-        private AccessoryDAODemo accessoryDaoDemo = new AccessoryDAODemo(new AccessoryDAO());
 
         private static Database _database;
         public static Database GetInstance()
@@ -35,16 +31,19 @@ namespace OOP.dao
         public int InsertTable(string name, BaseRow obj)
         {
             if (name == PRODUCT) {
-                return productDaoDemo.InsertTest(obj);
+                productTable.Add(obj);
+                return 1;
             }
             if (name == CATEGORY)
             {
-                return categoryDaoDemo.InsertTest(obj);
+                categorieTable.Add(obj);
+                return 1;
             }
 
             if (name == ACCESSOTION)
             {
-                return accessoryDaoDemo.InsertTest(obj);
+                accessotionTable.Add(obj);
+                return 1;
             }
             return 0;
         }
@@ -53,15 +52,15 @@ namespace OOP.dao
         {
             if (name == PRODUCT)
             {
-                return productDaoDemo.FindAllTest();
+                return productTable;
             }
             if (name == CATEGORY)
             {
-                return categoryDaoDemo.FindAllTest();
+                return categorieTable;
             }
             if (name == ACCESSOTION)
             {
-                return accessoryDaoDemo.FindAllTest();
+                return accessotionTable;
             }
             return null;
         }
@@ -70,15 +69,32 @@ namespace OOP.dao
         {
             if (name == PRODUCT)
             {
-                return productDaoDemo.UpdateTest(obj);
+                Product _product = (Product)Database.GetInstance().productTable.FirstOrDefault(productObject => productObject.GetId() == obj.GetId());
+                if (_product != null)
+                {
+                    Product ProductOldCategoryId = (Product)obj;
+                    _product.SetName(obj.GetName());
+                    _product.SetCategoryId(ProductOldCategoryId.GetCategoryId());
+                }
+                return 1;
             }
             if (name == CATEGORY)
             {
-                return categoryDaoDemo.UpdateTest(obj);
+                Category _category = (Category)Database.GetInstance().categorieTable.FirstOrDefault(categoryObject => categoryObject.GetId() == obj.GetId());
+                if (_category != null)
+                {
+                    _category.SetName(obj.GetName());
+                }
+                return 1;
             }
             if (name == ACCESSOTION)
             {
-                return accessoryDaoDemo.UpdateTest(obj);
+                Accessotion _accessotion = (Accessotion)Database.GetInstance().accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() == obj.GetId());
+                if (_accessotion != null)
+                {
+                    _accessotion.SetName(obj.GetName());
+                }
+                return 1;
             }
             return 0;
         }
@@ -86,15 +102,18 @@ namespace OOP.dao
         public bool Delete(string name, int id)
         {
             if (name == PRODUCT) {
-                return productDaoDemo.DeleteTest(id); 
+                productTable.RemoveAll(productObject => productObject.GetId() == id);
+                return true;
             }
             if (name == CATEGORY)
             {
-                return categoryDaoDemo.DeleteTest(id);
+                categorieTable.RemoveAll(categorieObject => categorieObject.GetId() == id);
+                return true;
             }
             if(name == ACCESSOTION)
             {
-                return accessoryDaoDemo.DeleteTest(id);
+                accessotionTable.RemoveAll(accessotionObject => accessotionObject.GetId() == id);
+                return true;
             }
             return false;
         }
@@ -103,15 +122,49 @@ namespace OOP.dao
         {
             if (name == PRODUCT)
             {
-                productDaoDemo.DeleteAllTest();
+                productTable.Clear();
                 return;
             }
             if (name == CATEGORY)
             {
-                categoryDaoDemo.DeleteAllTest();
+                categorieTable.Clear();
                 return;
             }
-            accessoryDaoDemo.DeleteAllTest();
+            accessotionTable.Clear();
+        }
+
+        public BaseRow FindById(string name, int id)
+        {
+            if (name == PRODUCT)
+            {
+                return productTable.FirstOrDefault(productObject => productObject.GetId() == id);
+            }
+            if (name == CATEGORY)
+            {
+                return productTable.FirstOrDefault(categoryObject => categoryObject.GetId() == id);
+            }
+            if (name == ACCESSOTION)
+            {
+                return productTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() == id);
+            }
+            return null;
+        }
+
+        public BaseRow FindByName(string name, string entityName)
+        {
+            if (name == PRODUCT)
+            {
+                return productTable.FirstOrDefault(productObject => productObject.GetName() == entityName);
+            }
+            if (name == CATEGORY)
+            {
+                return productTable.FirstOrDefault(categoryObject => categoryObject.GetName() == entityName);
+            }
+            if (name == ACCESSOTION)
+            {
+                return productTable.FirstOrDefault(categoryObject => categoryObject.GetName() == entityName);
+            }
+            return null;
         }
 
         public void UpdateTableById(int id, object obj)

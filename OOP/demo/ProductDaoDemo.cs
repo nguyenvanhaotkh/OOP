@@ -10,45 +10,48 @@ namespace OOP.demo
 {
     class ProductDaoDemo
     {
+        private ProductDemo productDemo;
         private ProductDAO productDAO;
-        public ProductDaoDemo(ProductDAO productDAO)
+        public ProductDaoDemo(ProductDemo productDemo, ProductDAO productDAO)
         {
+            this.productDemo = productDemo;
             this.productDAO = productDAO;
         }
 
-        public int InsertTest(BaseRow product)
+        public void Test()
         {
-            return productDAO.Insert(product,EntityType.product);
-        }
+            productDemo.CreateProductTest();
+            PrintData();
 
-        public int UpdateTest(BaseRow product)
-        {
-            return productDAO.Update(product);
-        }
+            Console.WriteLine("==Insert product==");
+            Database.GetInstance().InsertTable(EntityType.product.ToString(), new Product(5, "product5", 5));
+            PrintData();
 
-        public bool DeleteTest(int id)
-        {
-            return productDAO.Delete(id,EntityType.product);
-        }
+            Console.WriteLine("==Update product==");
+            Database.GetInstance().UpdateTable(EntityType.product.ToString(), new Product(5, "product5update", 55));
+            PrintData();
 
-        public void DeleteAllTest()
-        {
-            productDAO.DeleteAll(EntityType.product);
-        }
+            Console.WriteLine("==Delete product==");
+            Database.GetInstance().Delete(EntityType.product.ToString(), 3);
+            PrintData();
 
-        public List<BaseRow> FindAllTest()
-        {
-            return productDAO.FindAll(EntityType.product);
-        }
+            Console.WriteLine("==Find product by id(2)==");
+            Console.WriteLine(Database.GetInstance().FindById(EntityType.product.ToString(), 2).TxtData());
 
-        public BaseRow FindById(int id)
-        {
-            return productDAO.FindById(id,EntityType.product);
-        }
+            Console.WriteLine("==Find product by name(product1)==");
+            Console.WriteLine(Database.GetInstance().FindByName(EntityType.product.ToString(), "product1").TxtData());
 
-        public BaseRow FindByName(string name)
+            Console.WriteLine("Delete all product");
+            Database.GetInstance().DeleteAll(EntityType.product.ToString());
+            PrintData();
+
+        }
+        public void PrintData()
         {
-            return productDAO.FindByName(name,EntityType.product);
+            foreach (BaseRow row in Database.GetInstance().SelectTable(EntityType.product.ToString()))
+            {
+                Console.WriteLine(row.TxtData());
+            }
         }
     }
 }

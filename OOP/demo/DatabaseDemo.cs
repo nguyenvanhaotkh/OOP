@@ -65,6 +65,18 @@ namespace OOP.demo
             Console.WriteLine("Delete all success.");
         }
 
+        public void FindByIdTest(string name, int id)
+        {
+            BaseRow row = Database.GetInstance().FindById(name, id);
+            Console.WriteLine("data found: " + row.TxtData());
+        }
+
+        public void FindByNameTest(string name, string entityName)
+        {
+            BaseRow row = Database.GetInstance().FindByName(name, entityName);
+            Console.WriteLine("data found: " + row.TxtData());
+        }
+
         public void UpdateTableByIdTest(int id, object obj)
         {
             Database.GetInstance().UpdateTableById(id, obj);
@@ -72,26 +84,26 @@ namespace OOP.demo
 
         public void PrintTable(string name)
         {
-            if(name == "product")
-            {
-                foreach(Product product in Database.GetInstance().productTable)
-                {
-                    Console.WriteLine(product.TxtData());
-                }
-                return;
-            }
-            if(name == "category")
-            {
-                foreach (Category category in Database.GetInstance().categorieTable)
-                {
-                    Console.WriteLine(category.TxtData());
-                }
-                return;
-            }
-            foreach (Accessotion accessotion in Database.GetInstance().accessotionTable)
-            {
-                Console.WriteLine(accessotion.TxtData());
-            }
+            //if(name == "product")
+            //{
+            //    foreach(Product product in Database.GetInstance().productTable)
+            //    {
+            //        Console.WriteLine(product.TxtData());
+            //    }
+            //    return;
+            //}
+            //if(name == "category")
+            //{
+            //    foreach (Category category in Database.GetInstance().categorieTable)
+            //    {
+            //        Console.WriteLine(category.TxtData());
+            //    }
+            //    return;
+            //}
+            //foreach (Accessotion accessotion in Database.GetInstance().accessotionTable)
+            //{
+            //    Console.WriteLine(accessotion.TxtData());
+            //}
         }
     }
 }

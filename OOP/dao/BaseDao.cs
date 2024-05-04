@@ -7,28 +7,13 @@ using OOP.entity;
 
 namespace OOP.dao
 {
-    abstract class BaseDao<T> where T : BaseRow
+    abstract class BaseDao
     {
-        protected List<T> GetTable(EntityType type)
-        {
-            switch (type)
-            {
-                case EntityType.product:
-                    return Database.GetInstance().productTable as List<T>;
-                case EntityType.category:
-                    return Database.GetInstance().categorieTable as List<T>;
-                case EntityType.accessotion:
-                    return Database.GetInstance().accessotionTable as List<T>;
-                default:
-                    throw new ArgumentException("Invalid entity type");
-            }
-        }
-
-        public int Insert(T obj, EntityType type)
+        public int Insert(BaseRow obj, EntityType type)
         {
             try
             {
-                GetTable(type).Add(obj);
+                Database.GetInstance().InsertTable(type.ToString(), obj);
                 return 1;
             }
             catch
@@ -41,7 +26,7 @@ namespace OOP.dao
         {
             try
             {
-                GetTable(type).RemoveAll(productObject => productObject.GetId() == id);
+                Database.GetInstance().Delete(type.ToString(), id);
                 return true;
             }
             catch
@@ -52,22 +37,22 @@ namespace OOP.dao
 
         public void DeleteAll(EntityType type)
         {
-            GetTable(type).Clear();
+            Database.GetInstance().DeleteAll(type.ToString());
         }
 
-        public List<T> FindAll(EntityType type)
+        public List<BaseRow> FindAll(EntityType type)
         {
-            return GetTable(type);
+            return Database.GetInstance().SelectTable(type.ToString());
         }
 
         public BaseRow FindById(int id, EntityType type)
         {
-            return GetTable(type).FirstOrDefault(Object => Object.GetId() == id);
+            return Database.GetInstance().FindById(type.ToString(),id);
         }
 
         public BaseRow FindByName(string name, EntityType type)
         {
-            return GetTable(type).FirstOrDefault(Object => Object.GetName() == name);
+            return Database.GetInstance().FindByName(type.ToString(),name);
         }
     }
 
