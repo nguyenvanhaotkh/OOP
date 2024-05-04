@@ -9,7 +9,7 @@ namespace OOP.dao
 {
     abstract class BaseDao
     {
-        public int Insert(BaseRow obj, EntityType type)
+        public int Insert(EntityType type, BaseRow obj)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace OOP.dao
             }
         }
 
-        public int Update(BaseRow obj, EntityType type)
+        public int Update(EntityType type,BaseRow obj)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace OOP.dao
             }
         }
 
-        public bool Delete(int id, EntityType type)
+        public bool Delete(EntityType type, int id)
         {
             try
             {

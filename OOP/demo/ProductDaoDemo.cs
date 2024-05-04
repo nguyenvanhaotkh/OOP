@@ -11,9 +11,11 @@ namespace OOP.demo
     class ProductDaoDemo
     {
         private ProductDemo productDemo;
-        public ProductDaoDemo(ProductDemo productDemo)
+        private ProductDAO productDAO;
+        public ProductDaoDemo(ProductDemo productDemo,ProductDAO productDAO)
         {
             this.productDemo = productDemo;
+            this.productDAO = productDAO;
         }
 
         public void Test()
@@ -22,16 +24,16 @@ namespace OOP.demo
             PrintData();
 
             Console.WriteLine("\n==Insert product==");
-            Database.GetInstance().InsertTable(EntityType.product.ToString(), new Product(5, "product5", 5));
+            productDAO.Insert(EntityType.product, new Product(5, "product5", 5));
             PrintData();
 
             Console.WriteLine("\n==Update product (id=5)==");
             Console.WriteLine("Old data: " + Database.GetInstance().FindById(EntityType.product.ToString(), 5).TxtData());
-            Database.GetInstance().UpdateTable(EntityType.product.ToString(), new Product(5, "product5update", 55));
+            productDAO.Update(EntityType.product, new Product(5, "product5update", 55));
             Console.WriteLine("New data: " + Database.GetInstance().FindById(EntityType.product.ToString(), 5).TxtData());
 
             Console.WriteLine("\n==Delete product (id=3)==");
-            Database.GetInstance().Delete(EntityType.product.ToString(), 3);
+            productDAO.Delete(EntityType.product, 3);
             PrintData();
 
             Console.WriteLine("\n==Find product by id(2)==");
@@ -41,7 +43,7 @@ namespace OOP.demo
             Console.WriteLine(Database.GetInstance().FindByName(EntityType.product.ToString(), "product1").TxtData());
 
             Console.WriteLine("\nDelete all product");
-            Database.GetInstance().DeleteAll(EntityType.product.ToString());
+            productDAO.DeleteAll(EntityType.product);
             PrintData();
 
         }

@@ -11,9 +11,11 @@ namespace OOP.demo
     class CategoryDaoDemo
     {
         private CategoryDemo categoryDemo;
-        public CategoryDaoDemo(CategoryDemo categoryDemo)
+        private CategoryDAO categoryDAO;
+        public CategoryDaoDemo(CategoryDemo categoryDemo, CategoryDAO categoryDAO)
         {
             this.categoryDemo = categoryDemo;
+            this.categoryDAO = categoryDAO;
         }
 
         public void Test()
@@ -22,16 +24,16 @@ namespace OOP.demo
             PrintData();
 
             Console.WriteLine("\n==Insert category==");
-            Database.GetInstance().InsertTable(EntityType.category.ToString(), new Category(5, "category5"));
+            categoryDAO.Insert(EntityType.category, new Category(5, "category5"));
             PrintData();
 
             Console.WriteLine("\n==Update category (id=5)==");
             Console.WriteLine("Old data: " + Database.GetInstance().FindById(EntityType.category.ToString(), 5).TxtData());
-            Database.GetInstance().UpdateTable(EntityType.category.ToString(), new Category(5, "category5update"));
+            categoryDAO.Update(EntityType.category, new Category(5, "category5update"));
             Console.WriteLine("New data: " + Database.GetInstance().FindById(EntityType.category.ToString(), 5).TxtData());
 
             Console.WriteLine("\n==Delete category (id=3)==");
-            Database.GetInstance().Delete(EntityType.category.ToString(), 3);
+            categoryDAO.Delete(EntityType.category, 3);
             PrintData();
 
             Console.WriteLine("\n==Find category by id(2)==");
@@ -41,7 +43,7 @@ namespace OOP.demo
             Console.WriteLine(Database.GetInstance().FindByName(EntityType.category.ToString(), "category1").TxtData());
 
             Console.WriteLine("\nDelete all category");
-            Database.GetInstance().DeleteAll(EntityType.category.ToString());
+            categoryDAO.DeleteAll(EntityType.category);
             PrintData();
 
         }

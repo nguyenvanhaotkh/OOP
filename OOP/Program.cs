@@ -11,8 +11,8 @@ namespace OOP
 {
     class Program
     {
-        private ProductDaoDemo productDaoDemo = new ProductDaoDemo(new ProductDemo());
-        private CategoryDaoDemo categoryDaoDemo = new CategoryDaoDemo(new CategoryDemo());
+        private ProductDaoDemo productDaoDemo = new ProductDaoDemo(new ProductDemo(), new ProductDAO());
+        private CategoryDaoDemo categoryDaoDemo = new CategoryDaoDemo(new CategoryDemo(), new CategoryDAO());
         private AccessoryDAODemo accessoryDaoDemo = new AccessoryDAODemo(new AccessotionDemo());
         static void Main(string[] args)
         {
@@ -22,8 +22,8 @@ namespace OOP
         private void TestProduct()
         {
             //productDaoDemo.Test();
-            //categoryDaoDemo.Test();
-            accessoryDaoDemo.Test();
+            categoryDaoDemo.Test();
+            //accessoryDaoDemo.Test();
         }
     }
 }

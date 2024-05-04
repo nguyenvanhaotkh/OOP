@@ -11,9 +11,11 @@ namespace OOP.demo
     class AccessoryDAODemo
     {
         private AccessotionDemo accessotionDemo;
-        public AccessoryDAODemo(AccessotionDemo accessotionDemo)
+        private AccessoryDAO accessoryDAO;
+        public AccessoryDAODemo(AccessotionDemo accessotionDemo, AccessoryDAO accessoryDAO)
         {
             this.accessotionDemo = accessotionDemo;
+            this.accessoryDAO = accessoryDAO;
         }
 
         public void Test()
@@ -22,16 +24,16 @@ namespace OOP.demo
             PrintData();
 
             Console.WriteLine("\n==Insert accessotion==");
-            Database.GetInstance().InsertTable(EntityType.accessotion.ToString(), new Accessotion(5, "accessotion5"));
+            accessoryDAO.Insert(EntityType.accessotion, new Accessotion(5, "accessotion5"));
             PrintData();
 
             Console.WriteLine("\n==Update accessotion (id=5)==");
             Console.WriteLine("Old data: " + Database.GetInstance().FindById(EntityType.accessotion.ToString(), 5).TxtData());
-            Database.GetInstance().UpdateTable(EntityType.accessotion.ToString(), new Accessotion(5, "accessotion5update"));
+            accessoryDAO.Update(EntityType.accessotion, new Accessotion(5, "accessotion5update"));
             Console.WriteLine("New data: " + Database.GetInstance().FindById(EntityType.accessotion.ToString(), 5).TxtData());
 
             Console.WriteLine("\n==Delete accessotion (id=3)==");
-            Database.GetInstance().Delete(EntityType.accessotion.ToString(), 3);
+            accessoryDAO.Delete(EntityType.accessotion, 3);
             PrintData();
 
             Console.WriteLine("\n==Find accessotion by id(2)==");
@@ -41,7 +43,7 @@ namespace OOP.demo
             Console.WriteLine(Database.GetInstance().FindByName(EntityType.accessotion.ToString(), "accessotion1").TxtData());
 
             Console.WriteLine("\nDelete all category");
-            Database.GetInstance().DeleteAll(EntityType.accessotion.ToString());
+            accessoryDAO.DeleteAll(EntityType.accessotion);
             PrintData();
 
         }
