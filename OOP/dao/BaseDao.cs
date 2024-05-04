@@ -22,6 +22,19 @@ namespace OOP.dao
             }
         }
 
+        public int Update(BaseRow obj, EntityType type)
+        {
+            try
+            {
+                Database.GetInstance().UpdateTable(type.ToString(), obj);
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public bool Delete(int id, EntityType type)
         {
             try

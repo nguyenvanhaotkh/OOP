@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OOP.entity;
+using OOP.dao;
 
 namespace OOP.demo
 {
     class AccessotionDemo
     {
-        public Accessotion CreateProductTest(int id, string name)
+        public void CreateCategoryTest()
         {
-            return new Accessotion(id, name);
+            Database.GetInstance().InsertTable(EntityType.accessotion.ToString(), new Accessotion(1, "accessotion1"));
+            Database.GetInstance().InsertTable(EntityType.accessotion.ToString(), new Accessotion(2, "accessotion2"));
+            Database.GetInstance().InsertTable(EntityType.accessotion.ToString(), new Accessotion(3, "accessotion3"));
+            Database.GetInstance().InsertTable(EntityType.accessotion.ToString(), new Accessotion(4, "accessotion4"));
         }
         public void PrintProduct(Accessotion accessotion)
         {

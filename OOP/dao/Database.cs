@@ -141,11 +141,11 @@ namespace OOP.dao
             }
             if (name == CATEGORY)
             {
-                return productTable.FirstOrDefault(categoryObject => categoryObject.GetId() == id);
+                return categorieTable.FirstOrDefault(categoryObject => categoryObject.GetId() == id);
             }
             if (name == ACCESSOTION)
             {
-                return productTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() == id);
+                return accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() == id);
             }
             return null;
         }
@@ -158,11 +158,11 @@ namespace OOP.dao
             }
             if (name == CATEGORY)
             {
-                return productTable.FirstOrDefault(categoryObject => categoryObject.GetName() == entityName);
+                return categorieTable.FirstOrDefault(categoryObject => categoryObject.GetName() == entityName);
             }
             if (name == ACCESSOTION)
             {
-                return productTable.FirstOrDefault(categoryObject => categoryObject.GetName() == entityName);
+                return accessotionTable.FirstOrDefault(categoryObject => categoryObject.GetName() == entityName);
             }
             return null;
         }
