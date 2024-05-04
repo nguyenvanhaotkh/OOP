@@ -7,63 +7,24 @@ using OOP.entity;
 
 namespace OOP.dao
 {
-    class AccessoryDAO
+    class AccessoryDAO : BaseDao<BaseRow> , IDAO
     {
-        private static AccessoryDAO _accessory;
-        public static AccessoryDAO GetInstance()
+        public int Update(BaseRow accessotion)
         {
-            if (_accessory == null)
+            try
             {
-                _accessory = new AccessoryDAO();
+                Accessotion _accessotion = (Accessotion)Database.GetInstance().accessotionTable.FirstOrDefault(productObject => productObject.GetId() == accessotion.GetId());
+                Console.WriteLine("-Old data: " + _accessotion.TxtData());
+                if (_accessotion != null)
+                {
+                    _accessotion.SetName(accessotion.GetName());
+                }
+                return 1;
             }
-            return _accessory;
-        }
-
-        public void Insert(Accessotion accessotion)
-        {
-            Database.GetInstance().accessotionTable.Add(accessotion);
-            Console.WriteLine("Insert success...");
-        }
-
-        public void Update(Accessotion accessotion)
-        {
-            Accessotion _accessotion = Database.GetInstance().accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() == accessotion.GetId());
-            if (_accessotion != null)
+            catch
             {
-                Console.WriteLine("Old data: " + _accessotion.TxtData());
-                _accessotion.SetName(accessotion.GetName());
-                Console.WriteLine("Update success, new data: " + accessotion.TxtData());
-                return;
+                return 0;
             }
-            Console.WriteLine("Update fail...");
-        }
-
-        public void Delete(int id)
-        {
-            Database.GetInstance().accessotionTable.RemoveAll(accessotionObject => accessotionObject.GetId() == id);
-            Console.WriteLine("Delete success...");
-        }
-
-        public List<object> FindAll()
-        {
-            List<object> allData = new List<object>();
-            foreach (Accessotion _accessotion in Database.GetInstance().accessotionTable)
-            {
-                Console.WriteLine(_accessotion.TxtData());
-                allData.Add(_accessotion);
-            }
-            //return (List<object>)(object)Database.GetInstance().accessotionTable;
-            return allData;
-        }
-
-        public object FindById(int id)
-        {
-            return Database.GetInstance().accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() == id);
-        }
-
-        public object FindByName(string name)
-        {
-            return Database.GetInstance().accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetName() == name);
         }
     }
 }

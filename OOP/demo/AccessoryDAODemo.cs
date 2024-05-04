@@ -10,44 +10,45 @@ namespace OOP.demo
 {
     class AccessoryDAODemo
     {
-        private static AccessoryDAODemo _accessory;
-        public static AccessoryDAODemo GetInstance()
+        private AccessoryDAO accessoryDAO;
+        public AccessoryDAODemo(AccessoryDAO accessoryDAO)
         {
-            if (_accessory == null)
-            {
-                _accessory = new AccessoryDAODemo();
-            }
-            return _accessory;
+            this.accessoryDAO = accessoryDAO;
         }
 
-        public void InsertTest(Accessotion accessotion)
+        public int InsertTest(BaseRow accessotion)
         {
-            AccessoryDAO.GetInstance().Insert(accessotion);
+            return accessoryDAO.Insert(accessotion,EntityType.accessotion);
         }
 
-        public void UpdateTest(Accessotion accessotion)
+        public int UpdateTest(BaseRow accessotion)
         {
-            AccessoryDAO.GetInstance().Update(accessotion);
+            return accessoryDAO.Update(accessotion);
         }
 
-        public void DeleteTest(int id)
+        public bool DeleteTest(int id)
         {
-            AccessoryDAO.GetInstance().Delete(id);
+            return accessoryDAO.Delete(id, EntityType.accessotion);
         }
 
-        public List<object> FindAllTest()
+        public void DeleteAllTest()
         {
-            return AccessoryDAO.GetInstance().FindAll();
+            accessoryDAO.DeleteAll(EntityType.accessotion);
         }
 
-        public object FindByIdTest(int id)
+        public List<BaseRow> FindAllTest()
         {
-            return AccessoryDAO.GetInstance().FindById(id);
+            return accessoryDAO.FindAll(EntityType.accessotion);
         }
 
-        public object FindByName(string name)
+        public BaseRow FindByIdTest(int id)
         {
-            return AccessoryDAO.GetInstance().FindByName(name);
+            return accessoryDAO.FindById(id, EntityType.accessotion);
+        }
+
+        public BaseRow FindByName(string name)
+        {
+            return accessoryDAO.FindByName(name, EntityType.accessotion);
         }
     }
 }

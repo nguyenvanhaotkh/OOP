@@ -10,44 +10,45 @@ namespace OOP.demo
 {
     class ProductDaoDemo
     {
-        private static ProductDaoDemo _product;
-        public static ProductDaoDemo GetInstance()
+        private ProductDAO productDAO;
+        public ProductDaoDemo(ProductDAO productDAO)
         {
-            if (_product == null)
-            {
-                _product = new ProductDaoDemo();
-            }
-            return _product;
+            this.productDAO = productDAO;
         }
 
-        public void InsertTest(Product product)
+        public int InsertTest(BaseRow product)
         {
-            ProductDAO.GetInstance().Insert(product);
+            return productDAO.Insert(product,EntityType.product);
         }
 
-        public void UpdateTest(Product product)
+        public int UpdateTest(BaseRow product)
         {
-            ProductDAO.GetInstance().Update(product);
+            return productDAO.Update(product);
         }
 
-        public void DeleteTest(int id)
+        public bool DeleteTest(int id)
         {
-            ProductDAO.GetInstance().Delete(id);
+            return productDAO.Delete(id,EntityType.product);
         }
 
-        public List<object> FindAllTest()
+        public void DeleteAllTest()
         {
-            return ProductDAO.GetInstance().FindAll();
+            productDAO.DeleteAll(EntityType.product);
         }
 
-        public object FindById(int id)
+        public List<BaseRow> FindAllTest()
         {
-            return ProductDAO.GetInstance().FindById(id);
+            return productDAO.FindAll(EntityType.product);
         }
 
-        public object FindByName(string name)
+        public BaseRow FindById(int id)
         {
-            return ProductDAO.GetInstance().FindByName(name);
+            return productDAO.FindById(id,EntityType.product);
+        }
+
+        public BaseRow FindByName(string name)
+        {
+            return productDAO.FindByName(name,EntityType.product);
         }
     }
 }

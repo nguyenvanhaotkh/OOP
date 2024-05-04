@@ -19,29 +19,50 @@ namespace OOP.demo
             }
             return _databaseDemo;
         }
-        public void InsertTableTest(string name, object obj)
+        public void InsertTableTest(string name, BaseRow obj)
         {
-            Database.GetInstance().InsertTable(name, obj);
+            if(Database.GetInstance().InsertTable(name, obj) == 1)
+            {
+                Console.WriteLine("Insert success: " + obj.TxtData());
+                return;
+            }
+            Console.WriteLine("Insert fail!!!");
         }
 
         public void SelectTableTest(string name)
         {
-            Database.GetInstance().SelectTable(name);
+            List<BaseRow> baseRow = Database.GetInstance().SelectTable(name);
+            foreach(BaseRow _baseRow in baseRow)
+            {
+                Console.WriteLine(_baseRow.TxtData());
+            }
         }
 
-        public void UpdateTableTest(string name, object obj)
+        public void UpdateTableTest(string name, BaseRow obj)
         {
-            Database.GetInstance().UpdateTable(name, obj);
+            if (Database.GetInstance().UpdateTable(name, obj) == 1)
+            {
+                Console.WriteLine("Insert success: " + obj.TxtData());
+                return;
+            }
+            Console.WriteLine("Insert fail!!!");
         }
 
         public void DeleteTest(string name, int id)
         {
-            Database.GetInstance().Delete(name, id);
+            if(Database.GetInstance().Delete(name, id))
+            {
+                Console.WriteLine("Delete success.");
+                return;
+            }
+            Console.WriteLine("Delete fail.");
+            return;
         }
 
         public void DeleteAllTest(string name)
         {
             Database.GetInstance().DeleteAll(name);
+            Console.WriteLine("Delete all success.");
         }
 
         public void UpdateTableByIdTest(int id, object obj)

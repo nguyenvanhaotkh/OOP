@@ -5,22 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using OOP.dao;
 using OOP.entity;
+using OOP.demo;
 
 namespace OOP
 {
     class Program
     {
-        private string product = "product";
-        private string category = "category";
-        private string accessotion = "accessotion";
+        const string PRODUCT = "product";
+        const string CATEGORY = "category";
+        const string ACCESSOTION = "accessotion";
         static void Main(string[] args)
         {
-            Database db = Database.GetInstance();
+            //Database db = Database.GetInstance();
             Program p = new Program();
-            p.FunctionSelection(db);
+            p.FunctionSelection();
         }
 
-        private void FunctionSelection(Database db)
+        private void FunctionSelection(/*Database db*/)
         {
             Console.WriteLine("1-Insert");
             Console.WriteLine("2-Select");
@@ -32,273 +33,284 @@ namespace OOP
             switch (iselect)
             {
                 case 1:
-                    Insert(db);
+                    Insert();
                     break;
                 case 2:
-                    Select(db);
+                    Select();
                     break;
                 case 3:
-                    Update(db);
+                    Update();
                     break;
                 case 4:
-                    Delete(db);
+                    Delete();
                     break;
                 case 5:
-                    DeleteAll(db);
+                    DeleteAll();
                     break;
                 case 6:
                     Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("value does not match");
-                    FunctionSelection(db);
+                    FunctionSelection();
                     break;
 
             }
         }
 
-        private void Insert(Database db)
+        private void Insert()
         {
             Console.WriteLine("Enter Entity:");
             string txt = Console.ReadLine();
-            switch (txt)
-            {
-                case "product":
-                    Product np = (Product)ObjectFormInput(txt);
-                    db.InsertTable(product, np);
-                    FunctionSelection(db);
-                    break;
-                case "category":
-                    Category nc = (Category)ObjectFormInput(txt);
-                    db.InsertTable(category, nc);
-                    FunctionSelection(db);
-                    break;
-                case "accessotion":
-                    Accessotion na = (Accessotion)ObjectFormInput(txt);
-                    db.InsertTable(accessotion, na);
-                    FunctionSelection(db);
-                    break;
-                default:
-                    Console.WriteLine("value does not match");
-                    Insert(db);
-                    break;
+            if (txt == PRODUCT) {
+                Product np = (Product)ObjectFormInput(txt);
+                DatabaseDemo.GetInstance().InsertTableTest(PRODUCT, np);
+                FunctionSelection();
+                return;
             }
+            if (txt == CATEGORY) {
+                Category nc = (Category)ObjectFormInput(txt);
+                DatabaseDemo.GetInstance().InsertTableTest(CATEGORY, nc);
+                FunctionSelection();
+                return;
+            }
+            if (txt == ACCESSOTION) {
+                Accessotion na = (Accessotion)ObjectFormInput(txt);
+                DatabaseDemo.GetInstance().InsertTableTest(ACCESSOTION, na);
+                FunctionSelection();
+                return;
+            }
+            Console.WriteLine("value does not match");
+            Insert();
         }
 
-        private void Select(Database db)
+        private void Select()
         {
             Console.WriteLine("Enter Entity:");
             string txt = Console.ReadLine();
-            switch (txt)
+            if (txt == PRODUCT)
             {
-                case "product":
-                    if (db.productTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(product);
-                    FunctionSelection(db);
-                    break;
-                case "category":
-                    if (db.categorieTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(category);
-                    FunctionSelection(db);
-                    break;
-                case "accessotion":
-                    if (db.accessotionTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(accessotion);
-                    FunctionSelection(db);
-                    break;
-                default:
-                    Console.WriteLine("value does not match");
-                    Select(db);
-                    break;
+                if (Database.GetInstance().productTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(PRODUCT);
+                FunctionSelection();
+                return;
             }
+            if (txt == CATEGORY)
+            {
+                if (Database.GetInstance().categorieTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(CATEGORY);
+                FunctionSelection();
+                return;
+            }
+            if (txt == ACCESSOTION)
+            {
+                if (Database.GetInstance().accessotionTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(ACCESSOTION);
+                FunctionSelection();
+                return;
+            }
+            Console.WriteLine("value does not match");
+            Select();
         }
 
-        private void Update(Database db)
+        private void Update()
         {
             Console.WriteLine("Enter Entity:");
             string txt = Console.ReadLine();
-            switch (txt)
+            if (txt == PRODUCT)
             {
-                case "product":
-                    if (db.productTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(product);
-                    int productId = InputId();
-                    if (!CheckId(txt, productId))
-                    {
-                        FunctionSelection(db);
-                        return;
-                    }
-                    Product newProduct = (Product)ObjectFormInput(txt);
-                    newProduct.SetId(productId);
-                    db.UpdateTable(product, newProduct);
-                    FunctionSelection(db);
-                    break;
-                case "category":
-                    if (db.categorieTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(category);
-                    int categoryId = InputId();
-                    if (!CheckId(txt, categoryId))
-                    {
-                        FunctionSelection(db);
-                        return;
-                    }
-                    Category newCategory = (Category)ObjectFormInput(txt);
-                    newCategory.SetId(categoryId);
-                    db.UpdateTable(category, newCategory);
-                    FunctionSelection(db);
-                    break;
-                case "accessotion":
-                    if (db.accessotionTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(accessotion);
-                    int accessotionId = InputId();
-                    if (!CheckId(txt, accessotionId))
-                    {
-                        FunctionSelection(db);
-                        return;
-                    }
-                    Accessotion newAccessotion = (Accessotion)ObjectFormInput(txt);
-                    newAccessotion.SetId(accessotionId);
-                    db.UpdateTable(accessotion, newAccessotion);
-                    FunctionSelection(db);
-                    break;
-                default:
-                    Console.WriteLine("value does not match");
-                    Update(db);
-                    break;
+                if (Database.GetInstance().productTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(PRODUCT);
+                int productId = InputId();
+                if (!CheckId(txt, productId))
+                {
+                    FunctionSelection();
+                    return;
+                }
+                Product newProduct = (Product)ObjectFormInput(txt);
+                newProduct.SetId(productId);
+                DatabaseDemo.GetInstance().UpdateTableTest(PRODUCT, newProduct);
+                FunctionSelection();
+                return;
             }
+            if (txt == CATEGORY)
+            {
+                if (Database.GetInstance().categorieTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(CATEGORY);
+                int categoryId = InputId();
+                if (!CheckId(txt, categoryId))
+                {
+                    FunctionSelection();
+                    return;
+                }
+                Category newCategory = (Category)ObjectFormInput(txt);
+                newCategory.SetId(categoryId);
+                DatabaseDemo.GetInstance().UpdateTableTest(CATEGORY, newCategory);
+                FunctionSelection();
+                return;
+            }
+            if (txt == ACCESSOTION)
+            {
+                if (Database.GetInstance().accessotionTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(ACCESSOTION);
+                int accessotionId = InputId();
+                if (!CheckId(txt, accessotionId))
+                {
+                    FunctionSelection();
+                    return;
+                }
+                Accessotion newAccessotion = (Accessotion)ObjectFormInput(txt);
+                newAccessotion.SetId(accessotionId);
+                DatabaseDemo.GetInstance().UpdateTableTest(ACCESSOTION, newAccessotion);
+                FunctionSelection();
+                return;
+            }
+            Console.WriteLine("value does not match");
+            Update();
         }
 
-        private void Delete(Database db)
+        private void Delete()
         {
             Console.WriteLine("Enter Entity:");
             string txt = Console.ReadLine();
-            switch (txt)
+            if (txt == PRODUCT)
             {
-                case "product":
-                    if (db.productTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(product);
-                    Console.WriteLine("Select Product Id:");
-                    int pid = Convert.ToInt32(Console.ReadLine());
-                    db.Delete(product, pid);
-                    FunctionSelection(db);
-                    break;
-                case "category":
-                    if (db.categorieTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(category);
-                    Console.WriteLine("Select Product Id:");
-                    int cid = Convert.ToInt32(Console.ReadLine());
-                    db.Delete(category, cid);
-                    FunctionSelection(db);
-                    break;
-                case "accessotion":
-                    if (db.accessotionTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    db.SelectTable(accessotion);
-                    Console.WriteLine("Select Product Id:");
-                    int aid = Convert.ToInt32(Console.ReadLine());
-                    db.Delete(accessotion, aid);
-                    FunctionSelection(db);
-                    break;
-                default:
-                    Console.WriteLine("value does not match");
-                    Delete(db);
-                    break;
+                if (Database.GetInstance().productTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(PRODUCT);
+                int productId = InputId();
+                if (!CheckId(txt, productId))
+                {
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().DeleteTest(PRODUCT, productId);
+                FunctionSelection();
+                return;
             }
+            if (txt == CATEGORY)
+            {
+                if (Database.GetInstance().categorieTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(CATEGORY);
+                int categoryId = InputId();
+                if (!CheckId(txt, categoryId))
+                {
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().DeleteTest(CATEGORY, categoryId);
+                FunctionSelection();
+                return;
+            }
+            if (txt == ACCESSOTION)
+            {
+                if (Database.GetInstance().accessotionTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().SelectTableTest(ACCESSOTION);
+                int accessotionId = InputId();
+                if (!CheckId(txt, accessotionId))
+                {
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().DeleteTest(ACCESSOTION, accessotionId);
+                FunctionSelection();
+                return;
+            }
+            Console.WriteLine("value does not match");
+            Delete();
         }
 
-        private void DeleteAll(Database db)
+        private void DeleteAll()
         {
             Console.WriteLine("Enter Entity:");
             string txt = Console.ReadLine();
-            switch (txt)
+            if (txt == PRODUCT)
             {
-                case "product":
-                    if (db.productTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    Console.WriteLine("Delete...");
-                    db.DeleteAll(product);
-                    FunctionSelection(db);
-                    break;
-                case "category":
-                    if (db.categorieTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    Console.WriteLine("Delete...");
-                    db.DeleteAll(category);
-                    FunctionSelection(db);
-                    break;
-                case "accessotion":
-                    if (db.accessotionTable.Count == 0)
-                    {
-                        Console.WriteLine("There is no data");
-                        FunctionSelection(db);
-                        break;
-                    }
-                    Console.WriteLine("Delete...");
-                    db.DeleteAll(accessotion);
-                    FunctionSelection(db);
-                    break;
-                default:
-                    Console.WriteLine("value does not match");
-                    DeleteAll(db);
-                    break;
+                if (Database.GetInstance().productTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().DeleteAllTest(PRODUCT);
+                FunctionSelection();
+                return;
             }
+            if (txt == CATEGORY)
+            {
+                if (Database.GetInstance().categorieTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().DeleteAllTest(CATEGORY);
+                FunctionSelection();
+                return;
+            }
+            if (txt == ACCESSOTION)
+            {
+                if (Database.GetInstance().accessotionTable.Count == 0)
+                {
+                    Console.WriteLine("There is no data");
+                    FunctionSelection();
+                    return;
+                }
+                DatabaseDemo.GetInstance().DeleteAllTest(ACCESSOTION);
+                FunctionSelection();
+                return;
+            }
+            Console.WriteLine("value does not match");
+            DeleteAll();
         }
 
         private object ObjectFormInput(string name)
         {
-            if(name == product)
+            if(name == PRODUCT)
             {
                 int productId = Database.GetInstance().productTable.Count();
                 Console.WriteLine("Enter New Name:");
@@ -307,35 +319,37 @@ namespace OOP
                 int productCategoryId = Convert.ToInt32(Console.ReadLine());
                 return new Product(productId,productName, productCategoryId);
             }
-            if(name == category)
+            if(name == CATEGORY)
             {
-                int categoryId = Database.GetInstance().productTable.Count();
+                int categoryId = Database.GetInstance().categorieTable.Count();
                 Console.WriteLine("Enter New Name:");
                 string categoryName = Console.ReadLine();
                 return new Category(categoryId, categoryName);
             }
-            int accessotionId = Database.GetInstance().productTable.Count();
+            int accessotionId = Database.GetInstance().accessotionTable.Count();
             Console.WriteLine("Enter New Name:");
             string accessotionName = Console.ReadLine();
             return new Accessotion(accessotionId, accessotionName);
         }
+
         private int InputId()
         {
             Console.WriteLine("Select Id:");
             int id = Convert.ToInt32(Console.ReadLine());
             return id;
         }
+
         private bool CheckId(string name, int id)
         {
-            if (name == product && Database.GetInstance().productTable.FirstOrDefault(productObject => productObject.GetId() == id) != null)
+            if (name == PRODUCT && Database.GetInstance().productTable.FirstOrDefault(productObject => productObject.GetId() == id) != null)
             {
                 return true;
             }
-            if (name == category && Database.GetInstance().categorieTable.FirstOrDefault(categoryObject => categoryObject.GetId() == id) != null)
+            if (name == CATEGORY && Database.GetInstance().categorieTable.FirstOrDefault(categoryObject => categoryObject.GetId() == id) != null)
             {
                 return true;
             }
-            if (name == accessotion && Database.GetInstance().accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() != id) == null)
+            if (name == ACCESSOTION && Database.GetInstance().accessotionTable.FirstOrDefault(accessotionObject => accessotionObject.GetId() != id) == null)
             {
                 return true;
             }

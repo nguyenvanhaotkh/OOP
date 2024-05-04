@@ -10,40 +10,45 @@ namespace OOP.demo
 {
     class CategoryDaoDemo
     {
-        private static CategoryDaoDemo _category;
-
-        public static CategoryDaoDemo GetInstance()
+        private CategoryDAO categoryDAO;
+        public CategoryDaoDemo(CategoryDAO categoryDAO)
         {
-            if (_category == null)
-            {
-                _category = new CategoryDaoDemo();
-            }
-            return _category;
+            this.categoryDAO = categoryDAO;
         }
 
-        public void InsertTest(Category category)
+        public int InsertTest(BaseRow category)
         {
-            CategoryDAO.GetInstance().Insert(category);
+            return categoryDAO.Insert(category,EntityType.category);
         }
 
-        public void UpdateTest(Category category)
+        public int UpdateTest(BaseRow category)
         {
-            CategoryDAO.GetInstance().Update(category);
+            return categoryDAO.Update(category);
         }
 
-        public void DeleteTest(int id)
+        public bool DeleteTest(int id)
         {
-            CategoryDAO.GetInstance().Delete(id);
+            return categoryDAO.Delete(id, EntityType.category);
         }
 
-        public List<object> FindAllTest()
+        public void DeleteAllTest()
         {
-            return CategoryDAO.GetInstance().FindAll();
+            categoryDAO.DeleteAll(EntityType.category);
         }
 
-        public object FindById(int id)
+        public List<BaseRow> FindAllTest()
         {
-            return CategoryDAO.GetInstance().FindById(id);
+            return categoryDAO.FindAll(EntityType.category);
+        }
+
+        public BaseRow FindById(int id)
+        {
+            return categoryDAO.FindById(id, EntityType.category);
+        }
+
+        public BaseRow FindByName(string name)
+        {
+            return categoryDAO.FindByName(name, EntityType.category);
         }
     }
 }

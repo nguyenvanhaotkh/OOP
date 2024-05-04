@@ -7,11 +7,11 @@ using OOP.entity;
 
 namespace OOP.demo
 {
-    class ProductDemo : Product
+    class ProductDemo
     {
-        public Product CreateProductTest()
+        public Product CreateProductTest(int id, string name, int categoryId)
         {
-            return new Product();
+            return new Product(id,name,categoryId);
         }
         public void PrintProduct(Product product)
         {

@@ -7,59 +7,24 @@ using OOP.entity;
 
 namespace OOP.dao
 {
-    class CategoryDAO
+    class CategoryDAO : BaseDao<BaseRow> , IDAO
     {
-        private static CategoryDAO _category;
-
-        public static CategoryDAO GetInstance()
+        public int Update(BaseRow category)
         {
-            if (_category == null)
+            try
             {
-                _category = new CategoryDAO();
+                Category _category = (Category)Database.GetInstance().categorieTable.FirstOrDefault(productObject => productObject.GetId() == category.GetId());
+                Console.WriteLine("-Old data: " + _category.TxtData());
+                if (_category != null)
+                {
+                    _category.SetName(category.GetName());
+                }
+                return 1;
             }
-            return _category;
-        }
-
-        public void Insert(Category category)
-        {
-            Database.GetInstance().categorieTable.Add(category);
-            Console.WriteLine("Insert success...");
-        }
-
-        public void Update(Category category)
-        {
-            Category _category = Database.GetInstance().categorieTable.FirstOrDefault(categoryObject => categoryObject.GetId() == category.GetId());
-            if (_category != null)
+            catch
             {
-                Console.WriteLine("Old data: " + _category.TxtData());
-                _category.SetName(category.GetName());
-                Console.WriteLine("Update success, new data: " + category.TxtData());
-                return;
+                return 0;
             }
-            Console.WriteLine("Update fail...");
-        }
-
-        public void Delete(int id)
-        {
-            Database.GetInstance().categorieTable.RemoveAll(categoryObject => categoryObject.GetId() == id);
-            Console.WriteLine("Delete success...");
-        }
-
-        public List<object> FindAll()
-        {
-            List<object> alldata = new List<object>();
-            foreach (Category _category in Database.GetInstance().categorieTable)
-            {
-                Console.WriteLine(_category.TxtData());
-                alldata.Add(_category);
-            }
-            //return (List<object>)(object)Database.GetInstance().categorieTable;
-            return alldata;
-        }
-
-        public object FindById(int id)
-        {
-            return Database.GetInstance().categorieTable.FirstOrDefault(categoryObject => categoryObject.GetId() == id);
         }
     }
 }
